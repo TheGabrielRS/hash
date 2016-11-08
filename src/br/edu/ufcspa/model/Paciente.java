@@ -13,10 +13,10 @@ public class Paciente {
     private String rg;
     private String estado;
     private String nome;
-    private Date   nascimento;
+    private String nascimento;
     private String informacoes;
 
-    public Paciente(String cpf, String rg, String estado, String nome, Date nascimento, String informacoes) {
+    public Paciente(String cpf, String rg, String estado, String nome, String nascimento, String informacoes) {
         this.cpf = cpf;
         this.rg = rg;
         this.estado = estado;
@@ -25,39 +25,42 @@ public class Paciente {
         this.informacoes = informacoes;
     }
 
-    public Paciente(){}
+    public Paciente(String cpf, String estado){
+        this.cpf = cpf;
+        this.estado = estado;
+    }
 
-    public int hashCPF(String CPF){
+    public String hash(){
         int estado = this.converteEstado();
         int digitoEstado = Integer.parseInt(Character.toString(this.cpf.charAt(7)));
 
         int hash = estado*digitoEstado;
-        return hash = Integer.parseInt(Integer.toString(hash) + Integer.toString(chave()));
 
+        return Integer.toString(hash) + chave() + somaCPF() + Integer.toString(estado);
     }
 
     public int converteEstado(){
-        return Character.getNumericValue(this.estado.charAt(0))+Character.getNumericValue(this.estado.charAt(1));
+        return (Character.getNumericValue(this.estado.charAt(0))+Character.getNumericValue(this.estado.charAt(1)));
     }
 
-    public int chave(){
+    public String chave(){
         char[] cpfArray = this.cpf.toCharArray();
         int aux = 6, soma = 0;
-        for(int x=0; x < cpfArray.length; x++)
+        for(int x=0; x < 6; x++)
         {
             soma += Integer.parseInt(Character.toString(cpfArray[x]))+Integer.parseInt(Character.toString(cpfArray[aux]));
             aux--;
         }
-        return soma;
+        return Integer.toString(soma);
     }
 
-    public int somaCPF(){
+    public String somaCPF(){
         int soma = 0;
         for (int x=0; x < this.cpf.length(); x++)
         {
             soma += Integer.parseInt(Character.toString(this.cpf.charAt(x)));
         }
-        return soma;
+        return Integer.toString(soma);
     }
 
     public boolean validaCPF(String CPF){
@@ -147,19 +150,31 @@ public class Paciente {
         this.nome = nome;
     }
 
-    public Date getNascimento() {
-        return nascimento;
-    }
-
-    public void setNascimento(Date nascimento) {
-        this.nascimento = nascimento;
-    }
-
     public String getInformacoes() {
         return informacoes;
     }
 
     public void setInformacoes(String informacoes) {
         this.informacoes = informacoes;
+    }
+
+    public String getNascimento() {
+        return nascimento;
+    }
+
+    public void setNascimento(String nascimento) {
+        this.nascimento = nascimento;
+    }
+
+    @Override
+    public String toString() {
+        return "Paciente{" +
+                "cpf='" + cpf + '\'' +
+                ", rg='" + rg + '\'' +
+                ", estado='" + estado + '\'' +
+                ", nome='" + nome + '\'' +
+                ", nascimento='" + nascimento + '\'' +
+                ", informacoes='" + informacoes + '\'' +
+                '}';
     }
 }
