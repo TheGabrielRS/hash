@@ -35,21 +35,46 @@ public class ListaHash {
         }
     }
 
-    public void listagem()
+    public String listagem()
     {
+        String str = "";
         for(Enumeration<LinkedList<Paciente>> e = this.lista.elements(); e.hasMoreElements();)
         {
-            System.out.println("Quebrou lista");
             for(Paciente p : e.nextElement()){
-                System.out.println(p.toString());
+                str += p.toString()+'\n';
             }
         }
+        return str;
     }
 
     public void chaves()
     {
         for(Enumeration<String> e = lista.keys(); e.hasMoreElements();)
             System.out.println(e.nextElement());
+    }
+
+    public Paciente busca(String cpf)
+    {
+        for(Enumeration<LinkedList<Paciente>> e = this.lista.elements(); e.hasMoreElements();)
+        {
+            for(Paciente p : e.nextElement()){
+                if(p.getCpf() == cpf)
+                    return p;
+            }
+        }
+
+        return null;
+    }
+
+    public void edita(String cpf, String relatorio)
+    {
+        for(Enumeration<LinkedList<Paciente>> e = this.lista.elements(); e.hasMoreElements();)
+        {
+            for(Paciente p : e.nextElement()){
+                if(p.getCpf() == cpf)
+                    p.adicionaRelatorio(relatorio);
+            }
+        }
     }
 
 

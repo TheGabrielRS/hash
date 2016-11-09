@@ -1,5 +1,8 @@
 package br.edu.ufcspa.model;
 
+import javax.sql.rowset.serial.SerialStruct;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.StringJoiner;
@@ -16,6 +19,8 @@ public class Paciente {
     private String nascimento;
     private String informacoes;
 
+    private SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy");
+
     public Paciente(String cpf, String rg, String estado, String nome, String nascimento, String informacoes) {
         this.cpf = cpf;
         this.rg = rg;
@@ -28,6 +33,29 @@ public class Paciente {
     public Paciente(String cpf, String estado){
         this.cpf = cpf;
         this.estado = estado;
+    }
+
+    public Paciente(){}
+
+
+    public boolean validaRg(String rg)
+    {
+        return rg.length() == 9;
+    }
+
+    public boolean validaData(String data)
+    {
+        try{
+            formatoData.parse(data);
+            return true;
+        }catch (ParseException e){
+            return false;
+        }
+    }
+
+    public void adicionaRelatorio(String str)
+    {
+        this.setInformacoes(this.getInformacoes()+'\n'+str);
     }
 
     public String hash(){
